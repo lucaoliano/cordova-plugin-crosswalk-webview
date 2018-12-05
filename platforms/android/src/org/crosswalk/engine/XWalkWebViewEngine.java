@@ -63,6 +63,7 @@ public class XWalkWebViewEngine implements CordovaWebViewEngine {
     public static final String XWALK_Z_ORDER_ON_TOP = "xwalkZOrderOnTop";
 
     private static final String XWALK_EXTENSIONS_FOLDER = "xwalk-extensions";
+    private static final String XWALK_FILE_SCHEME_COOKIES = "xwalkFileSchemeCookies";
 
     private static final int PERMISSION_REQUEST_CODE = 100;
 
@@ -194,6 +195,12 @@ public class XWalkWebViewEngine implements CordovaWebViewEngine {
     }
 
     private void initWebViewSettings() {
+        boolean xwalkFileSchemeCookies = preferences == null ? false : preferences.getBoolean(XWALK_FILE_SCHEME_COOKIES, false);
+        if (xwalkFileSchemeCookies) {
+            cookieManager.setCookiesEnabled(true);
+            cookieManager.setAcceptFileSchemeCookies(true);
+        }
+
         webView.setVerticalScrollBarEnabled(false);
 
         boolean zOrderOnTop = preferences == null ? false : preferences.getBoolean(XWALK_Z_ORDER_ON_TOP, false);
